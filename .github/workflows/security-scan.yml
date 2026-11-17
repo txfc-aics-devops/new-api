@@ -8,17 +8,14 @@ on:
 jobs:
   secret-scan:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/trufflesecurity/trufflehog:latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Run secret scan
-        uses: trufflesecurity/trufflehog@main
-        with:
-          path: ./
-          extra_args: --results=verified,unknown
+      - name: Run secret scan (full filesystem)
+        run: trufflehog filesystem /__w/new-api/new-api --results=verified,unknown
 
   codeql-scan:
     runs-on: ubuntu-latest
