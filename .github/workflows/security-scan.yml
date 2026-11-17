@@ -13,11 +13,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Run secret scan
         uses: trufflesecurity/trufflehog@main
         with:
           path: ./
-          extra_args: --results=verified,unknown --no-update
+          extra_args: --results=verified,unknown
 
   codeql-scan:
     runs-on: ubuntu-latest
