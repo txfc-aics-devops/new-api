@@ -13,9 +13,25 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Run secret scan (filesystem mode)
+      - name: Run secret scan
         uses: trufflesecurity/trufflehog@main
         with:
           path: ./
           extra_args: --results=verified,unknown --no-update
+
+  codeql-scan:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: go, javascript
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
