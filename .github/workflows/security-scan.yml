@@ -1,18 +1,23 @@
 name: Security Scan
- 
+
 on:
   push:
     branches: [ main ]
   workflow_dispatch: {}
- 
+
 jobs:
   secret-scan:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
- 
+        with:
+          fetch-depth: 0
+
       - name: Run secret scan
         uses: trufflesecurity/trufflehog@main
         with:
           path: ./
+          base: ""
+          head: ""
+          extra_args: --results=verified,unknown
