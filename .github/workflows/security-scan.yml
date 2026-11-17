@@ -14,10 +14,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Run secret scan
+      - name: Run secret scan (filesystem mode)
         uses: trufflesecurity/trufflehog@main
         with:
           path: ./
-          base: ""
-          head: ""
-          extra_args: --results=verified,unknown
+          extra_args: --results=verified,unknown --no-update
